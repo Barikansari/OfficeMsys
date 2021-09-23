@@ -4,13 +4,14 @@
 }
 
 
-<div class="" id="tabs" style=" background-color: rgb(98, 227, 250); padding-top: 0px ">
-    <div style="float:right">
+<div class="" id="tabs" style=" background-color: rgb(108 193 208); padding-top: 0px ">
+    <div  style="float:right;">
         <button type="button" class="btn btn-info" style="color:black" data-bind="event: {click: $root.New}, enable:$root.btnsavenew" id="btnNew"> <i class="fas fa-plus"></i> New</button>
         <button type="button" class="btn btn-success" style="color:black" data-bind="event: {click: $root.SaveAllInfo}, enable:$root.btnsavesubmit" id="btnAddInformation"> <i class="fas fa-save"></i> Save</button>
         <button type="button" class="btn btn-warning" style="color:black" data-bind="event: {click: $root.ajaxUpdate}, enable:$root.btnajaxUpdate" id="btnajaxupdate"> <i class="fas fa-pen"></i> Update </button>
         <button type="button" class="btn btn-danger" style="color:black" data-bind="event: {click: $root.Clear}, enable:$root.btnclearsubmit" id="btnClearInformation"><i class="fas fa-times"></i> Clear</button>
     </div>
+
     <ul>
         <li><a href="#tabs-1">Office Info EntryForm</a></li>
 
@@ -18,6 +19,7 @@
         <li><a href="#tabs-7">Office DataGrid</a></li>
 
     </ul>
+
 
 
     <div id="tabs-1">
@@ -32,7 +34,7 @@
                 </div>
 
                 <div class="col-md-3">
-                    <label for="pan">PAN Number:</label>
+                    <label for="pan">PAN Number</label>
                     <input type="text" data-bind="value: PANnumber, enable:$root.enabledisable" class="form-control" id="pannumber" placeholder="Enter Office PAN Number">
                 </div>
 
@@ -56,7 +58,7 @@
                 </div>
 
                 <div class="col-md-3">
-                    <label for="phone">Phone:</label>
+                    <label for="phone">Phone</label>
                     <input type="text" data-bind="value: Phone, enable:$root.enabledisable" class="form-control" id="phone" placeholder="enter phonenumber--">
                 </div>
 
@@ -76,7 +78,7 @@
 
 
                 <div class="col-md-3">
-                    <label for="postalcode">PostalCode:</label>
+                    <label for="postalcode">PostalCode</label>
                     <input type="text" data-bind="value: PostalCode, enable:$root.enabledisable" class="form-control" id="postalcode" placeholder="Enter Your postalcode">
                 </div>
 
@@ -98,7 +100,7 @@
         </div>
         <br />
         <div>
-            <div class="" id="subtabs" style="background-color: rgb(250 236 127);">
+            <div class="" id="subtabs" style="background-color: rgb(151 146 146);">
                 <ul>
 
                     <li><a href="#tabs-2">Employee EntryForm </a></li>
@@ -198,7 +200,7 @@
                         </div>
                     </div>
                     <br />
-                    <hr />
+                    <hr style=" height: 2px; background-color:deepskyblue; color: deepskyblue;" />
                     <div>
                         <h3 style="text-align:center; color: green;">OrderProduct Detail</h3>
                         <div id="OrderGrid"></div>
@@ -245,12 +247,12 @@
     </div>
     <div id="tabs-7">
         <div class="search-container">
-            
-                <input type="text" data-bind="value: SearchField" placeholder="Search.." name="search">
-                <button type="submit" data-bind="event: {click: $root.Search}"><i class="fas fa-search"></i></button>
-           
+
+            <input type="text" data-bind="value: SearchField" placeholder="Search.." name="search">
+            <button type="submit" data-bind="event: {click: $root.Search}"><i class="fas fa-search"></i></button>
+
         </div>
-        
+
         <br />
         <div id="AllInfoGrid"></div>
     </div>

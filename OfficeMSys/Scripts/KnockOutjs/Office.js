@@ -913,6 +913,7 @@ function OfficeVM() {
                     success: function (editdata) {
                         
                         $("#tabs").tabs({ active: 0 });
+                        $("#subtabs").tabs({ active: 0 });
                         self.OfficeModel().OfficeName(editdata.Data.OfficeName);
                         self.OfficeModel().PANnumber(editdata.Data.PANnumber);
                         self.OfficeModel().StreetAddress(editdata.Data.StreetAddress);
