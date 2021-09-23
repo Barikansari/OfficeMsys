@@ -95,6 +95,7 @@ function OfficeVM() {
             self.EmployeeModel = ko.observable(new models.EmployeeModel());
             self.CustomerModel = ko.observable(new models.CustomerModel());
             self.OrderModel = ko.observable(new models.OrderModel());
+            self.SearchField = ko.observable();
            
             self.ID = ko.observable('');
 
@@ -130,6 +131,7 @@ function OfficeVM() {
 
         UiEvents.validate.OfficeinfoValidation();
     };
+
     self.SaveEmployee = function () {
         if (UiEvents.validate.EmployeeValidation()) {
             UiEvents.functions.SaveEmployeeGrid("EmployeeGrid");
@@ -137,12 +139,13 @@ function OfficeVM() {
         }
     };
     self.employeedelete = function deleteRow(index) {
-        self.EmployeeDataList.splice(index, 1);
-        UiEvents.functions.SaveEmployeeGrid("EmployeeGrid");
-        alert("Deleted Successfully !.");
+        if (confirm("Are you sure want to delete")) {
+            self.EmployeeDataList.splice(index, 1);
+            UiEvents.functions.SaveEmployeeGrid("EmployeeGrid");
+            alert("Deleted Successfully !.");
+        }
 
     };
-
     self.employeeedit = function editRow(index) {
         if (isNullOrEmpty((self.EmployeeModel().FirstName()) && (self.EmployeeModel().LastName()) && (self.EmployeeModel().Phone()) && (self.EmployeeModel().Email()) && (self.EmployeeModel().JobTitle()))) {
 
@@ -183,9 +186,11 @@ function OfficeVM() {
         }
     };
     self.orderdelete = function deleteRow(index) {
-        self.OrderDataList.splice(index, 1);
-        UiEvents.functions.SaveOrderGrid("OrderGrid");
-        alert("Deleted Successfully !.");
+        if (confirm("Are you sure want to delete")) {
+            self.OrderDataList.splice(index, 1);
+            UiEvents.functions.SaveOrderGrid("OrderGrid");
+            alert("Deleted Successfully !.");
+        }
 
     };
     self.orderedit = function editRow(index) {
@@ -213,7 +218,7 @@ function OfficeVM() {
     self.OrderUpdate = function updateRow() {
 
         UiEvents.validate.OrderValidation()
-    }; 
+    };  
 
     self.SaveCustomer = function () {
 
@@ -221,10 +226,13 @@ function OfficeVM() {
     };
 
     self.customerdelete = function deleteRow(index) {
-        self.CustomerDataList.splice(index, 1);
-        self.OrderDataList([]);
-        UiEvents.functions.SaveCustomerGrid("CustomerGrid");
-        alert("Deleted Successfully !.");
+        if (confirm("Are you sure want to delete")) {
+            self.CustomerDataList.splice(index, 1);
+            self.OrderDataList([]);
+            UiEvents.functions.SaveCustomerGrid("CustomerGrid");
+            alert("Deleted Successfully !.");
+        }
+        
 
     };
 
@@ -276,15 +284,21 @@ function OfficeVM() {
         UiEvents.functions.AjaxEdit(ID);
     };
 
+    self.infoDelete = function (ID) {
+        if (confirm("Are you sure want to delete")) {
+            UiEvents.functions.Delete(ID);
+        }
+    };
+
     self.ajaxUpdate = function (ID) {
 
         self.btnajaxUpdate(false);
         self.btnsavenew(true);
         self.enabledisable(false);
         self.btnemployeesubmit(false);
-        //self.btnupdatesubmit(false);
+        
         self.btncustomersubmit(false);
-        //self.btnvehicleupdate(false);
+        
         UiEvents.validate.ajaxUpdateValidation(ID)
     };
   
@@ -515,7 +529,7 @@ function OfficeVM() {
 
                     }
                     
-                    debugger;
+                    
                     $.ajax({
                         type: "POST",
                         url: "/Home/UpdateAllData",
@@ -856,6 +870,39 @@ function OfficeVM() {
 
             },
 
+            Delete: function (ID) {
+                $.ajax({
+                    type: "POST",
+                    url: '/Home/DeleteData',
+                    data: JSON.stringify({ "id": ID }),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+
+                    success: function (result) {
+                        UiEvents.functions.GetOfficeinfo();
+                        UiEvents.functions.SaveAllinfogrid("AllInfoGrid");
+                        alert("info deleted");
+                    }
+                });
+            },
+
+            Search: function (officename) {
+                $.ajax({
+                    type: "POST",
+                    url: "/Home/GetSearchData",
+                    data: JSON.stringify({ "OfficeName": officename }),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (searchresult) {
+                        
+                        self.AllDataList([]);
+                        self.AllDataList(searchresult.Data);
+                        UiEvents.functions.SaveAllinfogrid("AllInfoGrid");
+
+                    }
+                });
+            },
+
             AjaxEdit: function (ID) {
                 $.ajax({
                     type: "POST",
@@ -876,7 +923,7 @@ function OfficeVM() {
                         self.OfficeModel().CountryId(editdata.Data.CountryId);
                         self.ID(editdata.Data.ID);
                        
-                        //self.MId(editdata.Data.MId);
+                        
 
                         self.EmployeeDataList([]);
                         self.EmployeeDataList(editdata.Data.EmployeeList);
@@ -931,7 +978,7 @@ function OfficeVM() {
 
             SaveCustomerGrid: function (control) {
                 if ($("#" + control).pqGrid("instance")) {
-                    // $("#" + control).pqGrid("destroy");
+                    
                     $("#" + control).pqGrid('option', 'dataModel.data', ko.toJS(self.CustomerDataList()));
                     $("#" + control).pqGrid('refreshDataAndView');
                 } else {
@@ -943,7 +990,7 @@ function OfficeVM() {
                         { title: "Phone", align: "center", dataIndx: "Phone", width: "15%" },
                         { title: "City", align: "Center", dataIndx: "CityName", width: "15%" },
                         { title: "PostalCode", align: "Center", dataIndx: "PostalCode", width: "15%" },
-                        //{ title: "Contact", align: "Center", dataIndx: "contact", width: "15%" },
+
                         {
                             title: "Action", align: "center", width: "20%", render: function (ui) {
 
@@ -958,8 +1005,7 @@ function OfficeVM() {
                     options.showBottom = true;
                     $("#" + control).pqGrid(options);
 
-                    // self.MyModel().Name('');
-                    // self.MyModel().Age('');
+                    
                 }
             },
 
@@ -1055,6 +1101,11 @@ function OfficeVM() {
         UiEvents.clear.ResetAll();
     };
 
+    self.Search = function () {
+        var officename = self.SearchField();
+        UiEvents.functions.Search(officename);
+    };
+
     
 
 
@@ -1067,7 +1118,7 @@ function OfficeVM() {
         
         UiEvents.functions.SaveEmployeeGrid("EmployeeGrid");
         UiEvents.functions.SaveOrderGrid("OrderGrid");
-        /*UiEvents.functions.SaveCustomerGrid("CustomerGrid");*/
+        
         UiEvents.functions.Alldropdown();
         
         

@@ -99,12 +99,29 @@ namespace OfficeMSys.Controllers
         }
 
         [HttpPost]
+        public ActionResult DeleteData(int? id)
+        {
+            string message;
+            conn.DeleteMyData(id, out message);
+            return Json(new JsonResult { Data = message });
+
+        }
+
+        [HttpPost]
         public ActionResult UpdateAllData(Office data)
         {
 
             string message;
             conn.UpdateData(data, out message);
             return Json(new JsonResult { Data = message });
+
+        }
+
+        [HttpPost]
+        public ActionResult GetSearchData(string OfficeName)
+        {
+            List<FetchInfo> searchList = conn.GetSearchData(OfficeName);
+            return Json(new JsonResult { Data = searchList });
 
         }
     }

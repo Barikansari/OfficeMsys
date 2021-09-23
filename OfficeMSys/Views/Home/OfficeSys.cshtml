@@ -12,10 +12,10 @@
         <button type="button" class="btn btn-danger" style="color:black" data-bind="event: {click: $root.Clear}, enable:$root.btnclearsubmit" id="btnClearInformation"><i class="fas fa-times"></i> Clear</button>
     </div>
     <ul>
-        <li><a href="#tabs-1">Office EntryForm</a></li>
+        <li><a href="#tabs-1">Office Info EntryForm</a></li>
 
-        <li><a href="#tabs-6">AllRemoteInfo</a></li>
-        <li><a href="#tabs-7">AllInfo</a></li>
+        <li><a href="#tabs-6">Office Remote DataGrid</a></li>
+        <li><a href="#tabs-7">Office DataGrid</a></li>
 
     </ul>
 
@@ -107,6 +107,7 @@
                 </ul>
 
                 <div id="tabs-2">
+                    <h3 style="text-align:center; color: green;">Employee Details</h3>
                     <div id="EmployeeGrid"></div>
                     <br />
                     <div class="">
@@ -152,7 +153,7 @@
                 </div>
 
                 <div id="tabs-3">
-                    <h3 style="text-align:center;">Customer Details</h3>
+                    <h3 style="text-align:center; color: green;">Customer Details</h3>
                     <div id="CustomerGrid"></div>
                     <div class="">
                         <div class="form-row" data-bind="with: CustomerModel" style="padding-top:10px">
@@ -199,7 +200,7 @@
                     <br />
                     <hr />
                     <div>
-                        <h3 style="text-align:center;">OrderProduct Detail</h3>
+                        <h3 style="text-align:center; color: green;">OrderProduct Detail</h3>
                         <div id="OrderGrid"></div>
                         <div class="">
                             <div class="form-row" data-bind="with: OrderModel" style="padding-top:10px">
@@ -243,7 +244,14 @@
         <div id="RemoteInfoGrid"></div>
     </div>
     <div id="tabs-7">
-
+        <div class="search-container">
+            
+                <input type="text" data-bind="value: SearchField" placeholder="Search.." name="search">
+                <button type="submit" data-bind="event: {click: $root.Search}"><i class="fas fa-search"></i></button>
+           
+        </div>
+        
+        <br />
         <div id="AllInfoGrid"></div>
     </div>
 </div>

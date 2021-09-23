@@ -161,6 +161,63 @@ namespace OfficeMSys.DB
             sqlcon.Close();
             return resultList;
         }
+
+        public List<FetchInfo> GetSearchData(string OfficeName)
+        {
+
+            createconnection();
+            List<FetchInfo> searchList = new List<FetchInfo>();
+            SqlCommand cmd = new SqlCommand("[SearchOfficeData]", sqlcon);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@OfficeName", OfficeName);
+            sqlcon.Open();
+            SqlDataReader rdr = cmd.ExecuteReader();
+
+            while (rdr.Read())
+            {
+                var FetchInfo = new FetchInfo();
+                FetchInfo.ID = int.Parse(rdr["ID"].ToString());
+                FetchInfo.OfficeName = rdr["OfficeName"].ToString();
+                FetchInfo.PANnumber = rdr["PANnumber"].ToString();
+                FetchInfo.StreetAddress = rdr["StreetAddress"].ToString();
+                FetchInfo.Phone = rdr["Phone"].ToString();
+                FetchInfo.PostalCode = rdr["PostalCode"].ToString();
+                FetchInfo.CityId = int.Parse(rdr["CityId"].ToString());
+                FetchInfo.CityName = rdr["CityName"].ToString();
+                FetchInfo.ProvinceId = int.Parse(rdr["ProvinceId"].ToString());
+                FetchInfo.ProvinceName = rdr["ProvinceName"].ToString();
+                FetchInfo.CountryId = int.Parse(rdr["CountryId"].ToString());
+                FetchInfo.CountryName = rdr["CountryName"].ToString();
+
+
+                searchList.Add(FetchInfo);
+            }
+
+            sqlcon.Close();
+            return searchList;
+        }
+
+        public void DeleteMyData(int? id, out string message)
+        {
+            try
+            {
+                createconnection();
+                SqlCommand cmd = new SqlCommand("[DeleteAll]", sqlcon);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@ID", id);
+                sqlcon.Open();
+                cmd.ExecuteNonQuery();
+                sqlcon.Close();
+
+                message = "Success";
+
+            }
+            catch (Exception ex)
+            {
+                message = ex.Message;
+            }
+
+        }
         public Office EditMyData(int? Id)
         {
             createconnection();
