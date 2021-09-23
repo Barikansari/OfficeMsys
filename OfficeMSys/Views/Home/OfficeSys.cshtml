@@ -1,0 +1,250 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="" id="tabs" style=" background-color: rgb(98, 227, 250); padding-top: 0px ">
+    <div style="float:right">
+        <button type="button" class="btn btn-info" style="color:black" data-bind="event: {click: $root.New}, enable:$root.btnsavenew" id="btnNew"> <i class="fas fa-plus"></i> New</button>
+        <button type="button" class="btn btn-success" style="color:black" data-bind="event: {click: $root.SaveAllInfo}, enable:$root.btnsavesubmit" id="btnAddInformation"> <i class="fas fa-save"></i> Save</button>
+        <button type="button" class="btn btn-warning" style="color:black" data-bind="event: {click: $root.ajaxUpdate}, enable:$root.btnajaxUpdate" id="btnajaxupdate"> <i class="fas fa-pen"></i> Update </button>
+        <button type="button" class="btn btn-danger" style="color:black" data-bind="event: {click: $root.Clear}, enable:$root.btnclearsubmit" id="btnClearInformation"><i class="fas fa-times"></i> Clear</button>
+    </div>
+    <ul>
+        <li><a href="#tabs-1">Office EntryForm</a></li>
+
+        <li><a href="#tabs-6">AllRemoteInfo</a></li>
+        <li><a href="#tabs-7">AllInfo</a></li>
+
+    </ul>
+
+
+    <div id="tabs-1">
+        <div class="container-fluid">
+
+
+            <div class="form-group" data-bind="with: OfficeModel">
+
+                <div class="col-md-3">
+                    <label for="officename">Office Name</label>
+                    <input type="text" data-bind="value: OfficeName, enable:$root.enabledisable" class="form-control" id="officename" name="officename" placeholder="Your officename..">
+                </div>
+
+                <div class="col-md-3">
+                    <label for="pan">PAN Number:</label>
+                    <input type="text" data-bind="value: PANnumber, enable:$root.enabledisable" class="form-control" id="pannumber" placeholder="Enter Office PAN Number">
+                </div>
+
+                <div class="col-md-3">
+                    <label for="streetaddress">Street Address</label>
+                    <input type="text" data-bind="value: StreetAddress, enable:$root.enabledisable" class="form-control" id="streetaddress" name="streetaddress" placeholder="Your streetaddress..">
+                </div>
+
+
+                <div class="col-md-3">
+                    <label for="city">City</label><br>
+                    @*@Html.DropDownList("Country", ViewBag.CountryList as SelectList, "--Select country--")*@
+                    <select class="form-control col-md-4" id="city" data-bind="
+                                   value: CityId,
+                                    enable:$root.enabledisable,
+                                   options: $root.CityList,
+                                   optionsValue: 'CityId',
+                                   optionsText: 'CityName',
+                                   optionsCaption: '---SELECT City---'">
+                    </select>
+                </div>
+
+                <div class="col-md-3">
+                    <label for="phone">Phone:</label>
+                    <input type="text" data-bind="value: Phone, enable:$root.enabledisable" class="form-control" id="phone" placeholder="enter phonenumber--">
+                </div>
+
+
+                <div class="col-md-3">
+                    <label for="province">Province</label><br>
+                    @*@Html.DropDownList("Country", ViewBag.CountryList as SelectList, "--Select country--")*@
+                    <select class="form-control col-md-4" id="province" data-bind="
+                                   value: ProvinceId,
+                                    enable:$root.enabledisable,
+                                   options: $root.ProvinceList,
+                                   optionsValue: 'ProvinceId',
+                                   optionsText: 'ProvinceName',
+                                   optionsCaption: '---SELECT Province---'">
+                    </select>
+                </div>
+
+
+                <div class="col-md-3">
+                    <label for="postalcode">PostalCode:</label>
+                    <input type="text" data-bind="value: PostalCode, enable:$root.enabledisable" class="form-control" id="postalcode" placeholder="Enter Your postalcode">
+                </div>
+
+                <div class="col-md-3">
+                    <label for="country">Country</label><br>
+                    @*@Html.DropDownList("Country", ViewBag.CountryList as SelectList, "--Select country--")*@
+                    <select class="form-control col-md-4" id="Country" data-bind="
+                                   value: CountryId,
+                                    enable:$root.enabledisable,
+                                   options: $root.CountryList,
+                                   optionsValue: 'CountryId',
+                                   optionsText: 'CountryName',
+                                   optionsCaption: '---SELECT Country---'">
+                    </select>
+                </div>
+
+
+            </div>
+        </div>
+        <br />
+        <div>
+            <div class="" id="subtabs" style="background-color: rgb(250 236 127);">
+                <ul>
+
+                    <li><a href="#tabs-2">Employee EntryForm </a></li>
+                    <li><a href="#tabs-3">Customer EntryForm</a></li>
+
+                </ul>
+
+                <div id="tabs-2">
+                    <div id="EmployeeGrid"></div>
+                    <br />
+                    <div class="">
+
+                        <div class="form-row" data-bind="with: EmployeeModel">
+
+                            <div class="col-md-2">
+                                @*<label for="address">Street Address</label>*@
+                                <input type="text" class="form-control" data-bind="value: FirstName, enable:$root.enabledisable" id="firstname" name="firstname" placeholder="FirstName..">
+                            </div>
+
+                            <div class="col-md-2">
+                                @*<label for="address">Street Address</label>*@
+                                <input type="text" class="form-control" data-bind="value: LastName, enable:$root.enabledisable" id="lastname" name="lastname" placeholder="LastName..">
+                            </div>
+
+                            <div class="col-md-2">
+                                @*<label for="zip">ZIP</label>*@
+                                <input type="text" class="form-control" data-bind="value: Phone, enable:$root.enabledisable" id="phone" name="phone" placeholder=" -PhoneNumber-">
+                            </div>
+
+
+                            <div class="col-md-2">
+                                @*<label for="contact">Telephone</label>*@
+                                <input type="email" class="form-control" data-bind="value: Email, enable:$root.enabledisable" id="email" name="email" placeholder=" Enter Email " />
+                                `
+                            </div>
+
+                            <div class="col-md-2">
+                                @*<label for="zip">ZIP</label>*@
+                                <input type="text" class="form-control" data-bind="value: JobTitle, enable:$root.enabledisable" id="jobtitle" name="jobtitle" placeholder=" -JobTitle-">
+                            </div>
+                            <div>
+                                <!-- <button  type="button" class="btn btn-success" id="btntab" value="validate"><i class="fas fa-plus"></i>Add</button> -->
+                                <button type="button" class="btn btn-success" style="color:black" data-bind="event: {click: $root.SaveEmployee}, enable:$root.btnemployeesubmit," id="btnAddEmployee"> <i class="fas fa-plus"></i> Add</button>
+                                <button type="button" class="btn btn-warning" style="color:black" data-bind="event: {click: $root.EmployeeUpdate}, enable: $root.btnemployeeupdate" id="btnupdateInformation"><i class="fas fa-pen"></i> Update</button>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+                <div id="tabs-3">
+                    <h3 style="text-align:center;">Customer Details</h3>
+                    <div id="CustomerGrid"></div>
+                    <div class="">
+                        <div class="form-row" data-bind="with: CustomerModel" style="padding-top:10px">
+
+                            <div class="col-md-2">
+                                @*<label for="Name">Name</label>*@
+                                <input type="text" class="form-control" data-bind="value: Name, enable:$root.enabledisable" id="name" name="name" placeholder="Your Name.">
+                            </div>
+
+                            <div class="col-md-2">
+                                @*<label for="address1">Address</label>*@
+                                <input type="text" class="form-control" data-bind="value: Address1, enable:$root.enabledisable" id="address1" name="address1" placeholder=" Enter Your Address..">
+                            </div>
+
+                            <div class="col-md-2">
+                                @*<label for="phone">Phone</label>*@
+                                <input type="text" class="form-control" data-bind="value: Phone, enable:$root.enabledisable" id="phone" name="phone" placeholder=" -PhoneNumber-">
+                            </div>
+
+                            <div class="col-md-2">
+                                @*<label for="city">City</label><br />*@
+                                <select class="form-control col-md-4" id="city" data-bind="
+                                   value: CityId,
+                                    enable:$root.enabledisable,
+                                   options: $root.CityList,
+                                   optionsValue: 'CityId',
+                                   optionsText: 'CityName',
+                                   optionsCaption: '---SELECT City---'">
+                                </select>
+                            </div>
+
+                            <div class="col-md-2">
+                                @*<label for="postalcode">PostalCode:</label>*@
+                                <input type="text" data-bind="value: PostalCode, enable:$root.enabledisable" class="form-control" id="postalcode" placeholder="Enter Your postalcode">
+                            </div>
+
+                            <div>
+                                <!-- <button  type="button" class="btn btn-success" id="btntab" value="validate"><i class="fas fa-plus"></i>Add</button> -->
+                                <button type="button" class="btn btn-success" style="color:black" data-bind="event: {click: $root.SaveCustomer}, enable:$root.btncustomersubmit," id="btnAddCustomer"> <i class="fas fa-plus"></i> Add</button>
+                                <button type="button" class="btn btn-warning" style="color:black" data-bind="event: {click: $root.CustomerinfoUpdate}, enable: $root.btncustomerupdate" id="btnupdateInformation"><i class="fas fa-pen"></i> Update</button>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <hr />
+                    <div>
+                        <h3 style="text-align:center;">OrderProduct Detail</h3>
+                        <div id="OrderGrid"></div>
+                        <div class="">
+                            <div class="form-row" data-bind="with: OrderModel" style="padding-top:10px">
+                                <div class="col-md-4">
+                                    @*<label for="orderproduct">OrderProductName:</label>*@
+                                    <input type="text" data-bind="value: OrderProductName, enable:$root.enabledisable" class="form-control" id="orderproduct" placeholder="Enter Your orderproductName">
+                                </div>
+                                <div class="col-md-3">
+                                    @*<label for="orderdate">OrderDate:</label>*@
+                                    <input type="date" data-bind="value: OrderDate, enable:$root.enabledisable" class="form-control" id="orderdate" placeholder="Enter Your orderdate">
+                                </div>
+
+                                <div class="col-md-3">
+                                    @*<label for="submissiondate">SubmissionDate:</label>*@
+                                    <input type="date" data-bind="value: SubmissionDate, enable:$root.enabledisable" class="form-control" id="submissiondate" placeholder="Enter Your submissiondate">
+                                </div>
+
+
+                                <div>
+                                    <!-- <button  type="button" class="btn btn-success" id="btntab" value="validate"><i class="fas fa-plus"></i>Add</button> -->
+                                    <button type="button" class="btn btn-success" style="color:black" data-bind="event: {click: $root.SaveOrder}, enable:$root.btnordersubmit," id="btnAddCustomer"> <i class="fas fa-plus"></i> Add</button>
+                                    <button type="button" class="btn btn-warning" style="color:black" data-bind="event: {click: $root.OrderUpdate}, enable: $root.btnorderupdate" id="btnupdateInformation"><i class="fas fa-pen"></i> Update</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+
+
+
+    </div>
+
+    <div id="tabs-6">
+
+        <div id="RemoteInfoGrid"></div>
+    </div>
+    <div id="tabs-7">
+
+        <div id="AllInfoGrid"></div>
+    </div>
+</div>
+<script src="~/Scripts/KnockOutjs/Office.js"></script>
